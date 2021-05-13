@@ -21,7 +21,7 @@
                         </tr>
                         <tr>
                             <th>Роль</th>
-                            <td>{{$user_role->name}}</td>
+                            <td>{{$user->role->name}}</td>
                         </tr>
                         <tr>
                             <th>ФИО</th>
@@ -33,20 +33,20 @@
                         </tr>
                         </tbody>
                     </table>
-                    @if($user_role->id == 1)
+                    @if($user->role->id == 1)
                         <div class="container mb-4">
                             <div class="row justify-content-center">
                                 <button class="btn btn-secondary col-12"> Подать заявку на изменение данных</button>
                             </div>
                         </div>
-                    @elseif($user_role->id == 2)
+                    @elseif($user->role->id == 2)
                         <div class="container mb-4">
                             <div class="row justify-content-center">
                                 <button class="btn btn-secondary col-md-5 mb-md-0"> Подать заявку на изменение данных</button>
                                 <button class="btn btn-secondary col-md-5 offset-md-1"> Посмотреть аккаунты</button>
                             </div>
                         </div>
-                        @elseif($user_role->id == 3)
+                        @elseif($user->role->id == 3)
                             <div class="container mb-4">
                                 <div class="row justify-content-center">
                                     <button class="btn btn-secondary col-md-5 mb-md-0 col-sm-5 "> Посмотреть заявки на изменение данных</button>

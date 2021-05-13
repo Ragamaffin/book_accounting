@@ -25,8 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user_role = User::find(1)->role->where('id', Auth::user()->id)->first();
-
-        return view('home',['user_role' => $user_role]);
+        $user = User::find(1)->where('id', Auth::user()->id)->first();
+        return view('home',['user' => $user]);
     }
 }
