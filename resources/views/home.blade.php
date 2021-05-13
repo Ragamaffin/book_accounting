@@ -21,7 +21,7 @@
                         </tr>
                         <tr>
                             <th>Роль</th>
-                            <td>{{$user_role->name}}</td>
+                            <td>{{$user_role->role->name}}</td>
                         </tr>
                         <tr>
                             <th>ФИО</th>
