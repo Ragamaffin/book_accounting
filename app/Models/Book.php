@@ -13,18 +13,17 @@ class Book extends Model
     protected $fillable = [
         'name',
         'name_id',
-        'user_id',
         'genre_id',
         'author',
         'year',
         'description',
     ];
 
-    public function users(){
-        return $this->hasMany(User::class);
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 
     public function genre(){
-        return $this->hasOne(Genre::class);
+        return $this->belongsTo(Genre::class);
     }
 }

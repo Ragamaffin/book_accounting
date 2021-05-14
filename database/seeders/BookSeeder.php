@@ -16,6 +16,7 @@ class BookSeeder extends Seeder
     {
         DB::table('books')->insert([
             'name' => 'Кобзарь',
+            'name_id' => 1,
             'genre_id' => 1,
             'author' => 'Тарас Шевченко',
             'year' => 1997,

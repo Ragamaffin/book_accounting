@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
-class BookController extends Controller
+class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class BookController extends Controller
      */
     public function index()
     {
-
+        $books = Book::all();
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -24,7 +25,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
@@ -35,7 +36,19 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        $this->validate($request, [
+//            'name_id' => 'required|'
+//        ]);
+
+        Book::create([
+            'name_id' => $request['name_id'],
+            'name' => $request['book_name'],
+            'author' => $request['author'],
+            'genre_id' => $request['genre'],
+            'year' => $request['year'],
+            'description' => $request['description'],
+        ]);
+        return redirect()->route('books.index');
     }
 
     /**
