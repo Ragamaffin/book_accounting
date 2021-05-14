@@ -17,7 +17,7 @@
                         <tbody>
                         <tr>
                             <th>Ваш ID</th>
-                            <td>{{Auth::user()->id}}</td>
+                            <td>{{$user->id}}</td>
                         </tr>
                         <tr>
                             <th>Роль</th>
@@ -25,11 +25,11 @@
                         </tr>
                         <tr>
                             <th>ФИО</th>
-                            <td>{{Auth::user()->last_name}} {{Auth::user()->first_name}} {{Auth::user()->patronymic}}</td>
+                            <td>{{$user->last_name}} {{$user->first_name}} {{$user->patronymic}}</td>
                         </tr>
                         <tr>
                             <th>Номер телефона</th>
-                            <td>{{Auth::user()->phone}}</td>
+                            <td>{{$user->phone}}</td>
                         </tr>
                         </tbody>
                     </table>

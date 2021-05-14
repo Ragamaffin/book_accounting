@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-
 class HomeController extends Controller
 {
     /**
@@ -25,7 +21,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::find(1)->where('id', Auth::user()->id)->first();
+        $user = auth()->user();
         return view('home',['user' => $user]);
     }
 }
