@@ -15,7 +15,7 @@
                                 <label for="name_id" class="col-md-4 col-form-label text-md-right">{{ __('ID названия книги') }}</label>
 
                                 <div class="col-md-6">
-                                    <input id="name_id" type="text" class="form-control @error('name_id') is-invalid @enderror" name="name_id" value="{{ old('name_id') }}" required>
+                                    <input id="name_id" type="text" class="form-control @error('name_id') is-invalid @enderror" name="name_id" value="{{ old('name_id') }}">
 
                                     @error('name_id')
                                     <span class="invalid-feedback" role="alert">
@@ -55,15 +55,12 @@
 
                             <div class="form-group row">
                                 <label for="genre" class="col-md-4 col-form-label text-md-right">{{ __('Жанр') }}</label>
-
                                 <div class="col-md-6">
-                                    <input id="genre" type="text" class="form-control @error('genre') is-invalid @enderror" name="genre" value="{{ old('genre') }}" required>
-
-                                    @error('genre')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <select class="form-control" aria-label="Default select example" id="genre" name="genre">
+                                        @foreach($genres as $genre)
+                                            <option value="{{$genre->id}}" @if($genre->id == old('genre')) selected="selected"@endif>{{$genre->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

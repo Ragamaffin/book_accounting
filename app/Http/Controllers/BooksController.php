@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -25,7 +26,8 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $genres = Genre::all();
+        return view('books.create', compact('genres'));
     }
 
     /**
@@ -36,9 +38,9 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-//        $this->validate($request, [
-//            'name_id' => 'required|'
-//        ]);
+        $this->validate($request, [
+            'name_id' => 'required'
+        ]);
 
         Book::create([
             'name_id' => $request['name_id'],

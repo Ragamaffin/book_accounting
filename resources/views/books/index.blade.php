@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    @foreach($books as $book)
         <div class="container">
-            <div class="row">
-                <span>{{$book->name}}</span>
+            <div class="row justify-content-center">
+                @foreach($books as $book)
+                    <span class="col-2 text-center">{{$book->name}}</span>
+                @endforeach
             </div>
         </div>
-    @endforeach
 @endsection
