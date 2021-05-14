@@ -19,11 +19,11 @@ class Book extends Model
         'description',
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
-
     public function genre(){
         return $this->belongsTo(Genre::class);
+    }
+
+    public function userbooks(){
+        return $this->hasMany(UserBook::class);
     }
 }
