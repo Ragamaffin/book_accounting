@@ -26,4 +26,18 @@ class Book extends Model
     public function userbooks(){
         return $this->hasMany(UserBook::class);
     }
+
+    public function similarBooks()
+    {
+        return $this->hasMany(Book::class, 'name_id', 'name_id');
+    }
+
+    public function getImagePath()
+    {
+        if (!$this->image_name) {
+            return 'https://via.placeholder.com/220';
+        }
+
+        return asset('uploads/books/'.$this->image_name);
+    }
 }

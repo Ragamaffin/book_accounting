@@ -22,7 +22,6 @@ class HomeController extends Controller
     public function index()
     {
         $user = auth()->user();
-        dd($user->userbooks);
         return view('home',['user' => $user]);
     }
 }
