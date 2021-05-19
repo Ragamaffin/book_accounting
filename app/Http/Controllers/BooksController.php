@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use App\Models\Genre;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -12,7 +11,6 @@ class BooksController extends Controller
 {
     public function index(Request $request)
     {
-        $genres = Genre::all();
         $user = auth()->user();
         $search = $request->get('search');
         if($search == null) {
@@ -35,43 +33,19 @@ class BooksController extends Controller
                 ->get();
         }
 
-        return view('books.index', compact(['books','genres', 'user']));
+        return view('books.index', compact(['books', 'user']));
     }
 
-//    public function search(Request $request){
-//        $genres = Genre::all();
-//        $user = auth()->user();
-//        $search = $request->get('search');
-//        $books = Book::query()
-//            ->whereNull('books.user_id')
-//            ->where('books.name', 'like', '%'.$search.'%')
-//            ->withCount(['similarBooks' => function (Builder $similarBooks) {
-//                return $similarBooks->whereNull('user_id');
-//            }])
-//            ->groupBy('name_id')
-//            ->get();
-//        //dd($books);
-//        return view('books.index', compact(['books','genres', 'user']));
-//    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $genres = Genre::all();
-
-        return view('books.create', compact('genres'));
+        if(auth()->user()->role_id < 3){
+            return redirect(route('books.index'));
+        }
+        return view('books.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -86,7 +60,6 @@ class BooksController extends Controller
             $book->name_id = $biggestNameId + 1;
             $book->name = $request->input('book_name');
             $book->author = $request->input('author');
-            $book->genre_id = $request->input('genre');
             $book->year = $request->input('year');
             $book->description = $request->input('description');
 
@@ -108,48 +81,74 @@ class BooksController extends Controller
         return redirect()->route('books.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Book $book)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Book $book)
     {
-        //
+        if(auth()->user()->role_id < 3){
+            return redirect(route('books.index'));
+        }
+        return view('books.edit', compact('book'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Book $book)
     {
-        //
+        foreach ($book->similarBooks as $b){
+            $b->name = $request->input('book_name');
+            $b->author = $request->input('author');
+            $b->year = $request->input('year');
+            $b->description = $request->input('description');
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imageName = $image->getClientOriginalName();
+
+                $filenameData = pathinfo($imageName);
+
+                $randomName = $filenameData['filename'].'-'.now()->timestamp.'.'.$filenameData['extension'];
+
+                File::put(public_path('uploads/books/'.$randomName), $image->getContent());
+
+                $b->image_name = $randomName;
+            }
+            $b->save();
+        }
+
+        return redirect()->route('books.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Book $book
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Book $book)
     {
         //
+    }
+
+
+    public function showAddCount(Book $book)
+    {
+        return view('books.addCount', compact('book'));
+    }
+
+
+    public function addCount(Request $request, Book $book)
+    {
+        for($i = 1; $i <= $request->input('count'); $i++){
+            $newBook = new Book();
+            $newBook->name = $book->name;
+            $newBook->name_id = $book->name_id;
+            $newBook->author = $book->author;
+            $newBook->year = $book->year;
+            $newBook->description = $book->description;
+            $newBook->image_name = $book->image_name;
+            $newBook->save();
+        }
+
+        return redirect()->route('books.index');
     }
 }

@@ -36,9 +36,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{route('books.index')}}">{{__('Книги')}}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">{{__('О нас')}}</a>
-                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -21,4 +21,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('/books/{book}/addcount', 'BooksController@showAddCount')->name('books.showAddCount');
+Route::post('/books/{book}', 'BooksController@addCount')->name('books.addCount');
 Route::resource('books', 'BooksController');
